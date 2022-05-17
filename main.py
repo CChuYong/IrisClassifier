@@ -3,9 +3,10 @@ import sys
 from PyQt5 import uic
 from PyQt5.QtWidgets import *
 from sklearn.datasets import load_iris
-from sklearn.linear_model import LogisticRegression
+from sklearn.linear_model import LogisticRegression, BayesianRidge
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import train_test_split
+from sklearn.neural_network import MLPClassifier
 from sklearn.tree import DecisionTreeClassifier
 from sklearn.neighbors import KNeighborsClassifier
 
@@ -54,21 +55,15 @@ class test_window(QWidget):
         self.knn.clicked.connect(lambda x : self.stateChange("knn"))
         self.dtc.clicked.connect(lambda x: self.stateChange("dtc"))
         self.lr.clicked.connect(lambda x: self.stateChange("lr"))
+        self.mlp.clicked.connect(lambda x: self.stateChange("mlp"))
+        self.br.clicked.connect(lambda x: self.stateChange("br"))
         self.slider_changed()
     def stateChange(self, stre):
-        print(stre)
-        if stre == "knn":
-            self.knn.setChecked(True)
-            self.dtc.setChecked(False)
-            self.lr.setChecked(False)
-        elif stre == "dtc":
-            self.knn.setChecked(False)
-            self.dtc.setChecked(True)
-            self.lr.setChecked(False)
-        else:
-            self.knn.setChecked(False)
-            self.dtc.setChecked(False)
-            self.lr.setChecked(True)
+        self.knn.setChecked(stre == "knn")
+        self.dtc.setChecked(stre == "dtc")
+        self.lr.setChecked(stre == "lr")
+        self.mlp.setChecked(stre == "mlp")
+        self.br.setChecked(stre == "br")
     def slider_changed(self):
         self.labelt.setText("훈련에 사용할 데이터: %d개" % self.verticalSlider.value())
         self.labelte.setText("테스트에 사용할 데이터: %d개" % (150 - self.verticalSlider.value()))
@@ -84,6 +79,12 @@ class test_window(QWidget):
         elif self.dtc.isChecked():
             self.targetMod.setText("마지막으로 DTC 모델로 훈련되었습니다.")
             dt_clf = LogisticRegression()
+        elif self.mlp.isChecked():
+            self.targetMod.setText("마지막으로 MLP 모델로 훈련되었습니다.")
+            dt_clf = MLPClassifier()
+        elif self.br.isChecked():
+            self.targetMod.setText("마지막으로 BR 모델로 훈련되었습니다.")
+            dt_clf = BayesianRidge()
         else:
             self.targetMod.setText("마지막으로 LR 모델로 훈련되었습니다.")
             dt_clf = DecisionTreeClassifier(random_state=11)

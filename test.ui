@@ -142,6 +142,32 @@
     <string>LogisticRegression</string>
    </property>
   </widget>
+  <widget class="QCheckBox" name="br">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>80</y>
+     <width>191</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>BayesianRegression</string>
+   </property>
+  </widget>
+  <widget class="QCheckBox" name="mlp">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>100</y>
+     <width>191</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>MLPClassifier</string>
+   </property>
+  </widget>
  </widget>
  <resources/>
  <connections/>
